@@ -39,6 +39,12 @@ async function run() {
       const Products = await allProducts.find({}).toArray();
       res.json(Products);
     });
+    app.get('/products/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = {_id: ObjectId(id)};
+      const product = await allProducts.findOne(query);
+      res.json(product);
+    });
 
     // -----------------------------------------------------
 
@@ -49,6 +55,12 @@ async function run() {
       const watches = await allProducts.find(query).toArray();
       res.json(watches);
     });
+    // app.get("/watches/:id", async (req, res) => {
+    //   const id = req.params.id;
+    //   const query = { category: "watch" };
+    //   const watches = await allProducts.find(query).toArray();
+    //   res.json(watches);
+    // });
 
     // -----------------------------------------------------
 
