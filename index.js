@@ -23,6 +23,58 @@ async function run() {
   try {
     await client.connect();
     console.log("database connected succesfully");
+
+    const database = client.db("fashionStar");
+    const allProducts = database.collection("allProducts");
+    const users = database.collection("users");
+    const orders = database.collection("orders");
+
+    // ---------- add user ------------
+
+    // --------------------------------
+
+    // ================ Section for All Products ===========
+
+    app.get("/products", async (req, res) => {
+      const Products = await allProducts.find({}).toArray();
+      res.json(Products);
+    });
+
+    // -----------------------------------------------------
+
+    // ================ Section for watches ================
+
+    app.get("/watches", async (req, res) => {
+      const query = { category: "watch" };
+      const watches = await allProducts.find(query).toArray();
+      res.json(watches);
+    });
+
+    // -----------------------------------------------------
+
+    // ================ Section for glasses ================
+
+    app.get("/glasses", async (req, res) => {
+      const query = { category: "glass" };
+      const glasses = await allProducts.find(query).toArray();
+      res.json(glasses);
+    });
+
+    // -----------------------------------------------------
+
+    // ================ Section for jewelaries ===============
+
+    app.get("/jewellaries", async (req, res) => {
+      const query = { category: "Jewellery" };
+      const jewellery = await allProducts.find(query).toArray();
+      res.json(jewellery);
+    });
+
+    // -------------------------------------------------------
+
+    // ******************* Dashboard ***********************
+
+    // *****************************************************
   } finally {
   }
 }
