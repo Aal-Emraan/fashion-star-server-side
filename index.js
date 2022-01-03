@@ -45,6 +45,24 @@ async function run() {
       const product = await allProducts.findOne(query);
       res.json(product);
     });
+    app.delete('/products/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      // const product = await allProducts.deleteOne(query);
+      res.json({ _id: id });
+    });
+    app.put('/products/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const data = req.body;
+      const updateDoc = {
+        $set: {
+          ...data
+        }
+      };
+      const result = await allProducts.updateOne(query, updateDoc)
+      console.log(result);
+    });
 
     // -----------------------------------------------------
 
@@ -70,6 +88,12 @@ async function run() {
       const query = { category: "glass" };
       const glasses = await allProducts.find(query).toArray();
       res.json(glasses);
+    });
+    app.get("/getProducts", async (req, res) => {
+      const category = req.query?.category;
+      const query = { category };
+      const products = await allProducts.find(query).toArray();
+      res.json(products);
     });
 
     // -----------------------------------------------------
