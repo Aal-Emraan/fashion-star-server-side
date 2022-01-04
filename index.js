@@ -45,22 +45,22 @@ async function run() {
       const product = await allProducts.findOne(query);
       res.json(product);
     });
-    app.delete('/products/:id', async (req, res) => {
+    app.delete("/products/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
       // const product = await allProducts.deleteOne(query);
       res.json({ _id: id });
     });
-    app.put('/products/:id', async (req, res) => {
+    app.put("/products/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
       const data = req.body;
       const updateDoc = {
         $set: {
-          ...data
-        }
+          ...data,
+        },
       };
-      const result = await allProducts.updateOne(query, updateDoc)
+      const result = await allProducts.updateOne(query, updateDoc);
       console.log(result);
     });
 
@@ -124,3 +124,5 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
   console.log("listening to port", port);
 });
+
+// heroku link:  https://thawing-plateau-57038.herokuapp.com
