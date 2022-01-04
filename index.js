@@ -60,6 +60,22 @@ async function run() {
       const result = await allProducts.updateOne(query, updateDoc);
       console.log(result);
     });
+    // orders 
+    app.post('/orders', async (req, res) => {
+      const data = req.body
+      const result = await orders.insertMany(data);
+      console.log(result);
+      res.json(result);
+    })
+    app.get('/orders/:email', async (req, res) => {
+      const email = req.query.email
+      const query = {
+        email
+      }
+      const result = await orders.find(query).toArray();
+      res.json(result)
+
+    })
 
     // -----------------------------------------------------
 
@@ -115,6 +131,23 @@ async function run() {
     // -------------------------------------------------------
 
     // ******************* Dashboard ***********************
+    app.post('/user', async (req, res) => {
+      const user = req.body;
+      const result = await users.insertOne(user);
+      console.log(result);
+      res.json(result);
+    });
+    app.get('/user/:email', async (req, res) => {
+      const email = req.params.email;
+      const query = { email }
+      const user = await users.findOne(query);
+      let isAdmin = false;
+      console.log(user);
+      if (user?.role === 'admin') {
+        isAdmin = true;
+      }
+      res.json({ admin: isAdmin });
+    });
 
     // *****************************************************
   } finally {
