@@ -103,10 +103,12 @@ async function run() {
       res.json(jewellery);
     });
 
-    app.get("/jewellaries/:id", async (req, res) => {
+    app.get("/jewelleries/:id", async (req, res) => {
       const id = req.params.id;
+      console.log(id);
       const query = { _id: ObjectId(id) };
       const service = await allProducts.findOne(query);
+      console.log(service);
       res.json(service);
     });
 
